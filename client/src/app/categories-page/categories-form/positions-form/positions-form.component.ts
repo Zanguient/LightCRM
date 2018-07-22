@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {PositionService} from "../../../shared/services/position.service";
+import {PositionsService} from "../../../shared/services/positions.service";
 import {Position} from "../../../shared/interfaces";
 import {MaterialInstance, MaterialService} from "../../../shared/classes/material.service";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
@@ -20,7 +20,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   positionId = null;
 
 
-  constructor(private positionService: PositionService) {
+  constructor(private positionService: PositionsService) {
   }
 
   ngOnInit() {
