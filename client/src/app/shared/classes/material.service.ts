@@ -11,11 +11,11 @@ export interface MaterialInstance {
 
 export class MaterialService {
     static toast(message: string) {
-        M.toast({html: message});
+      M.toast({html: message});
     }
 
     static initializeFloatingButton(ref: ElementRef) {
-        M.FloatingActionButton.init(ref.nativeElement);
+      M.FloatingActionButton.init(ref.nativeElement);
     }
 
     static updateTextInputs() {
@@ -36,5 +36,9 @@ export class MaterialService {
         showClearButton: true,
         onClose: onClose
       });
+    }
+
+    static initTapTarget(ref: ElementRef): MaterialInstance {
+      return M.TapTarget.init(ref.nativeElement);
     }
 }

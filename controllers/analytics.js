@@ -6,7 +6,7 @@ module.exports.overview = async function(req, res) {
     try {
         const allOrders = await Order.find({
             user: req.user.id
-        }).sort(1);
+        }).sort({date: 1});
 
         const ordersMap = getOrdersMap(allOrders);
 
@@ -16,7 +16,7 @@ module.exports.overview = async function(req, res) {
         const totalOrdersNumber = allOrders.length;
 
         // Total days
-        const daysNumber = Object.keys(ordersMap).length
+        const daysNumber = Object.keys(ordersMap).length;
 
         // Orders per day
         const ordersPerDay = (totalOrdersNumber / daysNumber).toFixed(0);
