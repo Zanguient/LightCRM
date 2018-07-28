@@ -1,10 +1,10 @@
-const Order = require('../models/Orders')
-const errorHandler = require('../utils/errorHandler')
+import Order from "../models/Orders";
+import errorHandler from "../utils/errorHandler";
 
-module.exports.getAll = async function(req, res) {
-    const query = {
+async function getAll(req, res) {
+    const query: any = {
         user: req.user.id
-    }
+    };
 
     if (req.query.start) {
         query.date = {
@@ -29,7 +29,7 @@ module.exports.getAll = async function(req, res) {
             .find(query)
             .sort({date: -1})
             .skip(+req.query.offset)
-            .limit(+req.query.limit)
+            .limit(+req.query.limit);
 
         res.status(200).json(orders)
     } catch (error) {
@@ -37,22 +37,24 @@ module.exports.getAll = async function(req, res) {
     }
 }
 
-module.exports.create = async function(req, res) {
+async function create(req, res) {
     try {
         const lastOrder = await Order
             .findOne({user: req.user.id})
-            .sort({date: -1})
+            .sort({date: -1});
 
-        const maxOrder = lastOrder ? lastOrder.order : 0
+        const maxOrder = lastOrder ? lastOrder.order : 0;
 
         const order = await new Order({
             list: req.body.list,
             user: req.user.id,
             order: maxOrder + 1
-        }).save()
+        }).save();
 
         res.status(201).json(order)
     } catch (error) {
         errorHandler(res, error)
     }
 }
+
+export default {getAll, create};

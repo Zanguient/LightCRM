@@ -1,8 +1,8 @@
-const moment = require('moment');
-const Order = require('../models/Orders');
-const errorHandler = require('../utils/errorHandler');
+import moment from "moment";
+import Order from "../models/Orders";
+import errorHandler from "../utils/errorHandler";
 
-module.exports.overview = async function(req, res) {
+async function overview(req, res) {
     try {
         const allOrders = await Order.find({
             user: req.user.id
@@ -19,7 +19,7 @@ module.exports.overview = async function(req, res) {
         const daysNumber = Object.keys(ordersMap).length;
 
         // Orders per day
-        const ordersPerDay = (totalOrdersNumber / daysNumber).toFixed(0);
+        const ordersPerDay: number = +(totalOrdersNumber / daysNumber).toFixed(0);
 
         // Yesterday orders number
         const yesterdayOrdersNumber = yesterdayOrders.length;
@@ -63,9 +63,9 @@ module.exports.overview = async function(req, res) {
     } catch (e) {
         errorHandler(res, e);
     }
-};
+}
 
-module.exports.analytics = async function(req, res) {
+async function analytics(req, res) {
     try {
         const allOrders = await Order.find({user: req.user.id}).sort({date: 1});
         const ordersMap = getOrdersMap(allOrders);
@@ -93,7 +93,7 @@ module.exports.analytics = async function(req, res) {
     } catch (e) {
         errorHandler(res, e);
     }
-};
+}
 
 function getOrdersMap(orders = []) {
     const daysOrders = {};
@@ -122,3 +122,5 @@ function calculatePrice(orders = []) {
         return total += orderPrice;
     }, 0);
 }
+
+export default {overview, analytics};
